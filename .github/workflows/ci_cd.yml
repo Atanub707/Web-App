@@ -1,0 +1,47 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build and Test
+        run: |
+          # Build and test your HTML web application
+          # For example, if it's a static site, you may not have tests
+          # You can add any build or test commands here
+          # For simple HTML, there may not be much to do here
+
+      - name: Check HTML
+        run: |
+          # Check if HTML files are valid
+          find . -name "*.html" -exec tidy -q -e {} \;
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Deploy to GitHub Pages
+        run: |
+          mkdir public
+          mv index.html public/
+          echo "Hello from GitHub Actions" > public/deployed.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.3
+        with:
+          branch: gh-pages
+          folder: public
