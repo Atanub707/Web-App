@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: CI/CD for Static HTML Web App
 
 on:
   push:
@@ -6,53 +6,23 @@ on:
       - main
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [16.x]  # Specify Node.js version here
 
     steps:
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Build and Test
+      - name: Build
         run: |
-          # Build and test your HTML web application
-          # For example, if it's a static site, you may not have tests
-          # You can add any build or test commands here
-          # For simple HTML, there may not be much to do here
-
-      - name: Check HTML
-        run: |
-          # Check if HTML files are valid
-          find . -name "*.html" -exec tidy -q -e {} \;
-
-  deploy:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [16.x]  # Specify Node.js version here
-    needs: build
-    steps:
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Checkout code
-        uses: actions/checkout@v2
+          # Add any build steps here if needed
+          # For a static HTML site, this might be unnecessary
+          # You can use this step for additional processing if required
 
       - name: Deploy to GitHub Pages
         run: |
           mkdir public
-          mv index.html public/
-          echo "Hello from GitHub Actions" > public/deployed.txt
+          mv * public/
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
