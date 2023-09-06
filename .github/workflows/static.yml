@@ -34,10 +34,7 @@ jobs:
 
       - name: Build HTML/CSS
         run: |
-          # Replace these commands with your build commands for HTML and CSS
-          # For example, if you're using a static site generator or build tool like Jekyll or Hugo,
-          # you can specify the build command here.
-          # Example:
+          cd Web-App
           npm install
           npm run build
 
