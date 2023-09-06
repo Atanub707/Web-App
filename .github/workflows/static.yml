@@ -1,40 +1,53 @@
-name: CI/CD for My Web App
+name: Deploy static content to GitHub Pages
 
 on:
+  # Trigger the deployment when pushing to the main branch or manually from the Actions tab
   push:
     branches:
       - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install npm dependencies
+        run: npm install
+      
+      - name: Build HTML/CSS
+        run: |
+          # Replace these commands with your build commands
+          # For example, if your HTML/CSS doesn't require a build step, you can remove this section.
+          # If you have specific build scripts defined in your package.json, use them here.
+          npm run build-html # Replace with your HTML build script
+          npm run build-css # Replace with your CSS build script
+
       - name: Test HTML/CSS
         run: |
           # Use a tool like HTMLHint and CSSLint for testing
-          npm install -g htmlhint csslint
-          htmlhint index.html
-          csslint styles.css
+          npm run test-html # Replace with your HTML testing script
+          npm run test-css # Replace with your CSS testing script
 
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
-        with:
-          # Upload entire repository
-          path: '.'
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build # Replace this with the directory containing your built files
