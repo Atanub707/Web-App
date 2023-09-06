@@ -3,26 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Web App</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
+    <title>E-commerce Store</title>
 </head>
 <body>
     <header>
-        <h1>Welcome to My Web App</h1>
+        <h1>E-commerce Store</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Products</a></li>
+                <li><a href="#">Cart</a></li>
+            </ul>
+        </nav>
     </header>
-    
-    <div class="container">
-        <p>This is a basic web app created using HTML and CSS.</p>
-        <button onclick="displayMessage()">Click Me</button>
-        <p id="message"></p>
-    </div>
 
-    <script>
-        function displayMessage() {
-            document.getElementById("message").innerHTML = "Hello, World!";
-        }
-    </script>
+    <main>
+        <section class="product">
+            <img src="product1.jpg" alt="Product 1">
+            <h2>Product 1</h2>
+            <p>Description of Product 1.</p>
+            <p>Price: $19.99</p>
+            <button>Add to Cart</button>
+        </section>
+
+        <section class="product">
+            <img src="product2.jpg" alt="Product 2">
+            <h2>Product 2</h2>
+            <p>Description of Product 2.</p>
+            <p>Price: $29.99</p>
+            <button>Add to Cart</button>
+        </section>
+
+        <!-- Add more product sections as needed -->
+    </main>
+
+    <footer>
+        <p>&copy; 2023 E-commerce Store</p>
+    </footer>
 </body>
 </html>
-
-
