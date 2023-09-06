@@ -38,15 +38,15 @@ jobs:
           # For example, if you're using a static site generator or build tool like Jekyll or Hugo,
           # you can specify the build command here.
           # Example:
-          # npm install
-          # npm run build
+          npm install
+          npm run build
 
       - name: Test HTML/CSS
         run: |
           # Use a tool like HTMLHint and CSSLint for testing if needed
           # Replace these commands with your testing commands if applicable
           # Example:
-          # npm install -g htmlhint csslint
+          npm install -g htmlhint csslint
           htmlhint index.html
           csslint styles.css
 
